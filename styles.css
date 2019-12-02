@@ -19,12 +19,11 @@ body {
 
   /* each form input will be positioned atop one another */
   position: relative;
-
   z-index: 1;
 }
 
 /* BROKEN: GOTTA TRANSITION THE HOVER */
-body::before {
+/* body::before {
   position: absolute;
   content: "";
   top: 0;
@@ -36,7 +35,7 @@ body::before {
   z-index: -1;
   transition: opacity 1.5s ease-in-out;
   opacity: 0;
-}
+} */
 
 /* body:hover::before {
   opacity: 1;
@@ -68,7 +67,8 @@ input:focus-within {
 }
 
 .field-name input,
-.field-email input .field-password input {
+.field-email input,
+.field-password input {
   width: 100%;
   height: 85%;
   outline: none;
@@ -92,7 +92,7 @@ div.inactive {
   transform: translate(-50%, 50%);
 }
 
-.div.active {
+div.active {
   opacity: 1;
   pointer-events: all;
   transform: translate(-50%, -50%);

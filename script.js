@@ -6,12 +6,16 @@ let layerOpacity = window
   .getComputedStyle(document.querySelector("body"), ":before")
   .getPropertyValue("opacity");
 
+let gradientColorsNeutral = document.body.dataset.gradientNeutral.split(",");
+
+let gradientColorsDanger = document.body.dataset.gradientDanger.split(",");
+
+let gradientColorsSuccess = document.body.dataset.gradientSuccess.split(",");
+
 const animatedForm = () => {
-  let gradientColors = window
-    .getComputedStyle(document.querySelector("body"), ":before")
-    .getPropertyValue("background-image");
-  console.log(gradientColors || "null");
-  console.log(layerOpacity || "null");
+  // let gradientColors = window
+  //   .getComputedStyle(document.querySelector("body"), ":before")
+  //   .getPropertyValue("background-image");
 
   const arrows = document.querySelectorAll(".fa-arrow-down");
 
@@ -26,6 +30,7 @@ const animatedForm = () => {
       if (input.type === "text" && validateUser(input)) {
         //   move on to the next thing
         console.log("all clear");
+        moveToNextSlide(parent, nextForm);
       }
     });
   });
@@ -35,15 +40,24 @@ const validateUser = user => {
   if (user.value.length < 6) {
     //   ERROR
     console.log("not enough characters");
-    colorFeedback("#ED213A", "#93291E");
+
+    document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsDanger[0]}, ${gradientColorsDanger[1]}`;
   } else {
-    colorFeedback("#1D976C", "#93F9B9");
+    document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsSuccess[0]}, ${gradientColorsSuccess[1]}`;
+
     return true;
   }
 };
 
-const colorFeedback = (firstColor, secondColor) => {
-  document.body.style.backgroundImage = `linear-gradient(165deg, ${firstColor}, ${secondColor})`;
+const moveToNextSlide = (parent, nextForm) => {
+  setInterval(() => {
+    document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsNeutral[0]}, ${gradientColorsNeutral[1]}`;
+  }, 3000);
+
+  parent.classList.add("inactive");
+  parent.classList.remove("active");
+
+  nextForm.classList.add("active");
 };
 
 animatedForm();
