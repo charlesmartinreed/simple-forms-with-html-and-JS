@@ -12,6 +12,8 @@ let gradientColorsDanger = document.body.dataset.gradientDanger.split(",");
 
 let gradientColorsSuccess = document.body.dataset.gradientSuccess.split(",");
 
+const errorDiv = document.querySelector(".error-display");
+
 const animatedForm = () => {
   // let gradientColors = window
   //   .getComputedStyle(document.querySelector("body"), ":before")
@@ -39,6 +41,7 @@ const animatedForm = () => {
         moveToNextSlide(parent, nextForm);
       } else {
         parent.classList.add("error");
+        errorDiv.classList.toggle("visible");
       }
 
       // get rid of the animation so that it can be recycled
@@ -53,12 +56,10 @@ const validateUser = user => {
   let result = user.value.length > 6;
 
   if (result === true) {
-    console.log("valid user");
     updateUI(true);
   } else if (result === false) {
     //   ERROR
-    console.log("not enough characters");
-    updateUI(false);
+    updateUI(false, "Please enter a username with at least 6 characters");
   }
 
   return result;
@@ -69,10 +70,9 @@ const validateEmail = email => {
   let result = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
 
   if (result === true) {
-    console.log("valid email");
     updateUI(true);
   } else if (result === false) {
-    updateUI(false);
+    updateUI(false, "Please enter a valid email address");
   }
 
   return result;
@@ -83,30 +83,28 @@ const validatePassword = password => {
   let result = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password.value);
 
   if (result === true) {
-    console.log("valid password");
     updateUI(true);
   } else if (result === false) {
-    console.log(
+    updateUI(
+      false,
       "Password must be between 6 and 20 characters, contain at least one number digit, one uppercase and one lowercase letter"
     );
-    updateUI(false);
   }
 
   return result;
 };
 
-const updateUI = state => {
+const updateUI = (state, errorMsg) => {
   if (state === true) {
     document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsSuccess[0]}, ${gradientColorsSuccess[1]}`;
   } else if (state === false) {
     document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsDanger[0]}, ${gradientColorsDanger[1]}`;
+    errorDiv.textContent = `${errorMsg}`;
   }
 };
 
 const moveToNextSlide = (parent, nextForm) => {
-  // setInterval(() => {
-  //   document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsNeutral[0]}, ${gradientColorsNeutral[1]}`;
-  // }, 1000);
+  errorDiv.classList.toggle("visible");
 
   parent.classList.add("inactive");
   parent.classList.remove("active");

@@ -22,25 +22,6 @@ body {
   z-index: 1;
 }
 
-/* BROKEN: GOTTA TRANSITION THE HOVER */
-/* body::before {
-  position: absolute;
-  content: "";
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-image: linear-gradient(170deg, red, blue);
-
-  z-index: -1;
-  transition: opacity 1.5s ease-in-out;
-  opacity: 0;
-} */
-
-/* body:hover::before {
-  opacity: 1;
-} */
-
 .field-name,
 .field-email,
 .field-password,
@@ -102,6 +83,30 @@ div.error {
   animation: shake 0.1s linear 2;
 }
 
+.error-display {
+  width: 100%;
+  height: 7vh;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-7vh);
+  opacity: 0;
+  transition: transform 2s ease-in-out;
+}
+
+.error-display.visible {
+  animation: message 1.5s ease-out forwards;
+}
+
+.error-display.invisible {
+  animation: message 0.5s linear forwards reverse;
+}
+
 @keyframes shake {
   0% {
     transform: translate(-50%, -50%) translateX(-10px);
@@ -117,5 +122,17 @@ div.error {
 
   100% {
     transform: translate(-50%, -50%) translateX(0px);
+  }
+}
+
+@keyframes message {
+  from {
+    opacity: 0;
+    transform: translateY(-7vh);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
