@@ -34,38 +34,65 @@ const animatedForm = () => {
       } else if (input.type === "email" && validateEmail(input)) {
         console.log("all clear");
         moveToNextSlide(parent, nextForm);
+      } else if (input.type === "password" && validatePassword(input)) {
+        console.log("password OK");
+        moveToNextSlide(parent, nextForm);
       }
     });
   });
 };
 
 const validateUser = user => {
-  if (user.value.length < 6) {
+  let result = user.value.length > 6;
+
+  if (result === true) {
+    console.log("valid user");
+    updateUI(true);
+  } else if (result === false) {
     //   ERROR
     console.log("not enough characters");
-
-    document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsDanger[0]}, ${gradientColorsDanger[1]}`;
-  } else {
-    document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsSuccess[0]}, ${gradientColorsSuccess[1]}`;
-
-    return true;
+    updateUI(false);
   }
+
+  return result;
 };
 
 const validateEmail = email => {
   // courtesy of the one and only Tyler McGinnis
   let result = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
 
-  if (result) {
+  if (result === true) {
     console.log("valid email");
+    updateUI(true);
+  } else if (result === false) {
+    updateUI(false);
+  }
+
+  return result;
+};
+
+const validatePassword = password => {
+  // "Password must be between 6 and 20 characters, contain at least one number digit, one uppercase and one lowercase letter"
+  let result = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(password.value);
+
+  if (result === true) {
+    console.log("valid password");
+    updateUI(true);
+  } else if (result === false) {
+    console.log(
+      "Password must be between 6 and 20 characters, contain at least one number digit, one uppercase and one lowercase letter"
+    );
+    updateUI(false);
+  }
+
+  return result;
+};
+
+const updateUI = state => {
+  if (state === true) {
     document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsSuccess[0]}, ${gradientColorsSuccess[1]}`;
-
-    return true;
-  } else {
-    console.log("invalid email");
+  } else if (state === false) {
     document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsDanger[0]}, ${gradientColorsDanger[1]}`;
-
-    return false;
   }
 };
 
