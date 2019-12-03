@@ -37,7 +37,14 @@ const animatedForm = () => {
       } else if (input.type === "password" && validatePassword(input)) {
         console.log("password OK");
         moveToNextSlide(parent, nextForm);
+      } else {
+        parent.classList.add("error");
       }
+
+      // get rid of the animation so that it can be recycled
+      parent.addEventListener("animationend", function() {
+        this.classList.remove("error");
+      });
     });
   });
 };
