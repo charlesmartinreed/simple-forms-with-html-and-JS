@@ -1,24 +1,20 @@
-let gradientColors = window
-  .getComputedStyle(document.querySelector("body"), ":before")
-  .getPropertyValue("background-image");
-
-let layerOpacity = window
-  .getComputedStyle(document.querySelector("body"), ":before")
-  .getPropertyValue("opacity");
+// let gradientColors = window
+//   .getComputedStyle(document.querySelector("body"), ":before")
+//   .getPropertyValue("background-image");
+// let layerOpacity = window
+//   .getComputedStyle(document.querySelector("body"), ":before")
+//   .getPropertyValue("opacity");
 
 let gradientColorsNeutral = document.body.dataset.gradientNeutral.split(",");
-
 let gradientColorsDanger = document.body.dataset.gradientDanger.split(",");
-
 let gradientColorsSuccess = document.body.dataset.gradientSuccess.split(",");
+
+const progressBars = document.querySelectorAll(".progress-bar");
+let currentSlideCount = 0;
 
 const errorDiv = document.querySelector(".error-display");
 
 const animatedForm = () => {
-  // let gradientColors = window
-  //   .getComputedStyle(document.querySelector("body"), ":before")
-  //   .getPropertyValue("background-image");
-
   const arrows = document.querySelectorAll(".fa-arrow-down");
 
   arrows.forEach(arrow => {
@@ -96,6 +92,11 @@ const validatePassword = password => {
 
 const updateUI = (state, errorMsg) => {
   if (state === true) {
+    // update the progress bar as well!
+    progressBars[currentSlideCount].classList.add("complete");
+
+    console.log(`${progressBars[currentSlideCount].classList}`);
+
     document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsSuccess[0]}, ${gradientColorsSuccess[1]}`;
   } else if (state === false) {
     document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsDanger[0]}, ${gradientColorsDanger[1]}`;
@@ -104,12 +105,14 @@ const updateUI = (state, errorMsg) => {
 };
 
 const moveToNextSlide = (parent, nextForm) => {
-  errorDiv.classList.toggle("visible");
+  errorDiv.classList.remove("visible");
 
   parent.classList.add("inactive");
   parent.classList.remove("active");
 
   nextForm.classList.add("active");
+
+  currentSlideCount++;
 };
 
 animatedForm();
