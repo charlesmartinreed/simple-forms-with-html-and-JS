@@ -97,9 +97,9 @@ const updateUI = (state, errorMsg) => {
 
     console.log(`${progressBars[currentSlideCount].classList}`);
 
-    document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsSuccess[0]}, ${gradientColorsSuccess[1]}`;
+    document.body.style.backgroundImage = `linear-gradient(65deg, ${gradientColorsSuccess[0]}, ${gradientColorsSuccess[1]}`;
   } else if (state === false) {
-    document.body.style.backgroundImage = `linear-gradient(165deg, ${gradientColorsDanger[0]}, ${gradientColorsDanger[1]}`;
+    document.body.style.backgroundImage = `linear-gradient(65deg, ${gradientColorsDanger[0]}, ${gradientColorsDanger[1]}`;
     errorDiv.textContent = `${errorMsg}`;
   }
 };

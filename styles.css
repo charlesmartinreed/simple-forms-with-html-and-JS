@@ -16,7 +16,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  background-image: linear-gradient(170deg, #ffd04e, #ff8548);
+  background-image: linear-gradient(65deg, #ffd04e, #ff8548);
 
   /* each form input will be positioned atop one another */
   position: relative;
@@ -96,7 +96,7 @@ div.active {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .progress-bar.complete {
